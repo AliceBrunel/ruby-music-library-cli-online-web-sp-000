@@ -39,11 +39,11 @@ class Song
     genre.add_song(self)
   end
   
-  def self.find_by_name(name)
-    self.all.find {|song| song.name == name}
+  def self.new_from_filename(file)
+    artist = Artist.find_or_create_by_name(file.split(' - ')[0])
+    genre = Genre.find_or_create_by_name(file.split(' - ')[2].split('.')[0])
+    song_name = file.split(' - ')[1]
+    self.new(song_name, artist, genre)
   end
   
-  def self.find_or_create_by_name(name)
-      self.find_by_name(name) ? self.find_by_name(name) : self.create(name)
-  end
 end
